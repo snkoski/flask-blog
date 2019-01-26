@@ -1,0 +1,4 @@
+# Atom Files
+
+*.env
+*.flaskenv
