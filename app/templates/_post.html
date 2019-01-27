@@ -1,0 +1,7 @@
+<!-- this is a sub-template, _ prefix is a naming convention to help recognize which templates are sub-template, for posts. now posts can be used in multiple templates, but you only need to change the layout here to affect it everywhere -->
+<table>
+  <tr valign="top">
+    <td><img src="{{ post.author.avatar(36) }}"></td>
+    <td>{{ post.author.username }} says: <h3>{{ post.title }}</h3><br>{{ post.body }}</td>
+  </tr>
+</table>

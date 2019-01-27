@@ -2,6 +2,7 @@ from app import db, login
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from hashlib import md5
 
 
 # class inherits from db.Model, base class for all models from Flask-SQLAlchemy
@@ -19,6 +20,8 @@ class User(UserMixin, db.Model):
     # backref defines a field that will be added to the objects of the "many" classthat points back to the "one", post.author
     # lazy defines how the database query for the relationship will be issued
     posts = db.relationship('Post', backref='author', lazy='dynamic')
+    about_me = db.Column(db.String(140))
+    last_seen = db.Column(db.DateTime, default=datetime.utcnow)
 
     # __repr__ method tells Python how to print objects of this class, useful for debugging
     def __repr__(self):
@@ -32,6 +35,12 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+    # create avatar for user by using md5 hash of their email with gravatar
+    def avatar(self, size):
+        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
+            digest, size)
+
 # function required to help Flask-Login load a user, id passed to the function is a string so numeric IDs need to be converted to int
 @login.user_loader
 def load_user(id):
@@ -39,7 +48,8 @@ def load_user(id):
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(140))
+    title = db.Column(db.String(140))
+    body = db.Column(db.String(1000))
     # indexing the timestamp will be useful for retrieveing posts in chronological order
     # passing default the function datetime.utcnow NOT passing the value of the function, passing the function itself
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)

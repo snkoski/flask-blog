@@ -2,8 +2,8 @@
 
 <!-- this content will be inserted in to the block content at bottom of base.html -->
 {% block content %}
-    <h1>Hi, {{ user_in_html.username }}!</h1>
+    <h1>Hi, {{ current_user.username }}!</h1>
     {% for post in posts %}
-    <div><p>{{ post.author.username }} says: <b>{{ post.body }}</b></p></div>
+    <div><p>{{ post.author.username }} says: <b><h3>{{ post.title }}</h3> {{ post.body }}</b></p></div>
     {% endfor %}
 {% endblock %}
