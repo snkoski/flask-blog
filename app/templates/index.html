@@ -2,8 +2,34 @@
 
 <!-- this content will be inserted in to the block content at bottom of base.html -->
 {% block content %}
-    <h1>Hi, {{ current_user.username }}!</h1>
-    {% for post in posts %}
-    <div><p>{{ post.author.username }} says: <b><h3>{{ post.title }}</h3> {{ post.body }}</b></p></div>
-    {% endfor %}
+  <h1>Hi, {{ current_user.username }}!</h1>
+  {% if form %}
+  <form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+      {{ form.title.label  }}<br>
+      {{ form.title(size=140)}}<br>
+      {% for error in form.body.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.body.label }}<br>
+      {{ form.body(cols=32, rows=4) }}<br>
+      {% for error in form.body.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>{{ form.submit() }}</p>
+  </form>
+  {% endif %}
+  {% for post in posts %}
+    {% include '_post.html' %}
+  {% endfor %}
+  {% if prev_url %}
+  <a href="{{ prev_url }}">Newer posts</a>
+  {% endif %}
+  {% if next_url %}
+  <a href="{{ next_url }}">Older posts</a>
+  {% endif %}
 {% endblock %}
