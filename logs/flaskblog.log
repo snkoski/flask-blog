@@ -90,3 +90,4 @@ sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed
 2019-01-28 13:03:17,222 INFO: Blog startup [in /Users/flatironschool/Development/code/flask/flask_blog/app/__init__.py:48]
 2019-01-28 13:05:36,025 INFO: Blog startup [in /Users/flatironschool/Development/code/flask/flask_blog/app/__init__.py:48]
 2019-01-28 13:10:15,558 INFO: Blog startup [in /Users/flatironschool/Development/code/flask/flask_blog/app/__init__.py:48]
+2019-01-28 13:37:16,953 INFO: Blog startup [in /Users/flatironschool/Development/code/flask/flask_blog/app/__init__.py:49]

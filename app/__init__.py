@@ -6,6 +6,7 @@ from flask_login import LoginManager
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
+from flask_mail import Mail
 
 # create Flask application
 app = Flask(__name__)
@@ -16,7 +17,7 @@ migrate = Migrate(app, db)
 login = LoginManager(app)
 # detting up Flask-Login's @login_required route decorator, 'login' is endpoint that handles the login view
 login.login_view = 'login'
-
+mail = Mail(app)
 # import modules to the application
 from app import routes, models, errors
 
