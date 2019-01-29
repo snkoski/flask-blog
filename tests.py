@@ -2,15 +2,27 @@ from datetime import datetime, timedelta
 import unittest
 from app import app, db
 from app.models import User, Post
+from config import Config
+
+
+# create subclass of application's Config class and override SQLAlchemy configuration to use an in-memory SQLite database
+class TestConfig(Config):
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI  'sqlite://'
 
 class UserModelCase(unittest.TestCase):
+    # setUp() and tearDown() are invoked automatically by testing framework. used to create and destroy a brand new application for each test
+    # new application is stored as self.app
     def setUp(self):
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
+        self.app = create_app(TestConfig)
+        self.app_context = self.app.app_context()
+        self.app_context.push()
         db.create_all()
 
     def tearDown(self):
         db.session.remove()
         db.drop_all()
+        self.app_context.pop()
 
     def test_password_hashing(self):
         u = User(username='susan')
